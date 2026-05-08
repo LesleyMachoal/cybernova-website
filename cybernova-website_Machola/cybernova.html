@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberNova Analytics Ltd — Enterprise Threat Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #020b18;
+    --navy-mid: #051428;
+    --navy-card: #07192e;
+    --blue: #0a84ff;
+    --cyan: #00d4ff;
+    --cyan-dim: #00a8cc;
+    --electric: #38f0ff;
+    --glow: rgba(0,212,255,0.18);
+    --glow-strong: rgba(0,212,255,0.35);
+    --text: #c8dff0;
+    --text-dim: #6a8aa8;
+    --text-muted: #3a5570;
+    --border: rgba(0,212,255,0.12);
+    --border-mid: rgba(0,212,255,0.22);
+    --glass: rgba(5,20,40,0.7);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── BACKGROUND GRID ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 72px;
+    background: rgba(2,11,24,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 36px; height: 36px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg { width: 100%; height: 100%; }
+
+  .logo-text {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #e8f4ff;
+    line-height: 1.15;
+  }
+
+  .logo-sub {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.18em;
+    color: var(--cyan-dim);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.83rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 500;
+  }
+
+  .nav-links a:hover { color: var(--cyan); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .btn-ghost {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--border-mid);
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 16px rgba(0,212,255,0.15);
+  }
+
+  .btn-primary {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--cyan);
+    border: none;
+    padding: 10px 22px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-primary:hover {
+    background: var(--electric);
+    box-shadow: 0 0 28px rgba(0,212,255,0.5);
+  }
+
+  /* ─── SECTIONS ─── */
+  section { position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 5% 80px;
+    overflow: hidden;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  .orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,132,255,0.14) 0%, transparent 70%);
+    top: -100px; left: -150px;
+    animation: orbFloat 12s ease-in-out infinite alternate;
+  }
+
+  .orb-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,212,255,0.10) 0%, transparent 70%);
+    bottom: -80px; right: -120px;
+    animation: orbFloat 15s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes orbFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(30px, 20px) scale(1.05); }
+  }
+
+  .hero-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid var(--border-mid);
+    padding: 7px 18px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,255,0.4); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(0,212,255,0); }
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #f0f8ff;
+    margin-bottom: 28px;
+    animation: fadeDown 0.8s 0.1s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 60%, #7b5cfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+    line-height: 1.75;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+
+  .btn-large {
+    font-size: 0.88rem;
+    padding: 15px 36px;
+    letter-spacing: 0.1em;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  }
+
+  .btn-ghost-large {
+    font-size: 0.88rem;
+    padding: 14px 36px;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid var(--border);
+    animation: fadeDown 0.8s 0.5s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #f0f8ff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-num span { color: var(--cyan); }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── TICKER ─── */
+  .ticker-wrap {
+    background: rgba(0,212,255,0.05);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 48px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .ticker-item strong { color: var(--cyan-dim); font-weight: 500; }
+
+  .ticker-sep {
+    color: var(--text-muted);
+    opacity: 0.3;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 600;
+    color: #f0f8ff;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* ─── SERVICES ─── */
+  #services {
+    padding: 120px 5%;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .service-card:hover { background: rgba(0,30,60,0.85); }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    width: 50px; height: 50px;
+    margin-bottom: 28px;
+    color: var(--cyan);
+  }
+
+  .service-num {
+    position: absolute;
+    top: 36px; right: 40px;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+
+  .service-title {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: #e8f4ff;
+    margin-bottom: 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan-dim);
+    text-decoration: none;
+    transition: color 0.2s, gap 0.2s;
+  }
+
+  .service-link:hover { color: var(--cyan); gap: 12px; }
+
+  /* ─── THREAT INTEL ─── */
+  #threat {
+    padding: 120px 5%;
+    background: linear-gradient(180deg, transparent, rgba(0,20,40,0.5), transparent);
+  }
+
+  .threat-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .threat-visual {
+    position: relative;
+    height: 480px;
+  }
+
+  .threat-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--navy-card);
+    border: 1px solid var(--border-mid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .screen-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.3);
+  }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+
+  .screen-title {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-left: 10px;
+  }
+
+  .screen-body {
+    padding: 24px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    line-height: 2.2;
+    color: var(--text-dim);
+    overflow: hidden;
+    height: calc(100% - 50px);
+  }
+
+  .log-line {
+    display: flex;
+    gap: 14px;
+    animation: logSlide 0.4s ease both;
+  }
+
+  .log-time { color: var(--text-muted); white-space: nowrap; }
+  .log-level-warn { color: #f0b429; }
+  .log-level-crit { color: #ff4d4f; }
+  .log-level-ok { color: #52c41a; }
+  .log-level-info { color: var(--cyan-dim); }
+  .log-msg { color: var(--text); }
+
+  @keyframes logSlide {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .threat-content .eyebrow { text-align: left; }
+
+  .threat-content .section-title { text-align: left; font-size: clamp(1.8rem, 3vw, 2.8rem); }
+
+  .threat-features {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .threat-feature {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 20px 22px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s;
+  }
+
+  .threat-feature:hover { border-color: rgba(0,212,255,0.3); }
+
+  .feat-icon {
+    width: 42px; height: 42px;
+    flex-shrink: 0;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cyan);
+  }
+
+  .feat-text h4 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e8f4ff;
+    margin-bottom: 4px;
+  }
+
+  .feat-text p {
+    font-size: 0.87rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 120px 5%;
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-copy .section-title { text-align: left; }
+  .about-copy .eyebrow { text-align: left; }
+
+  .about-copy p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.85;
+    margin-top: 20px;
+  }
+
+  .about-copy p:first-of-type { margin-top: 24px; }
+
+  .about-sigil {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .metric-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    padding: 30px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .metric-card:hover { border-color: rgba(0,212,255,0.3); }
+
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+  }
+
+  .metric-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .metric-val {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f0f8ff;
+    line-height: 1;
+  }
+
+  .metric-val span { color: var(--cyan); }
+
+  .metric-lbl {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .certifications {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 36px;
+  }
+
+  .cert-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: rgba(0,212,255,0.06);
+    border: 1px solid var(--border-mid);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--cyan-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── CLIENTS ─── */
+  #clients {
+    padding: 80px 5%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .clients-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .clients-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .clients-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    opacity: 0.45;
+  }
+
+  .client-logo {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+    filter: grayscale(1);
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .client-logo:hover { filter: none; opacity: 1; color: #e8f4ff; }
+
+  /* ─── CASE STUDIES / INSIGHTS ─── */
+  #insights {
+    padding: 120px 5%;
+  }
+
+  .insights-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+
+  .insight-main {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .insight-main:hover { border-color: rgba(0,212,255,0.3); }
+
+  .insight-img {
+    width: 100%;
+    height: 260px;
+    background: linear-gradient(135deg, #051428 0%, #0a2a4a 50%, #041525 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insight-img-gfx {
+    width: 200px; height: 200px;
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insight-img-gfx::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 50%;
+    animation: spin 20s linear infinite;
+  }
+
+  .insight-img-gfx::after {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px dashed rgba(0,212,255,0.1);
+    border-radius: 50%;
+    animation: spin 30s linear infinite reverse;
+  }
+
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .insight-body {
+    padding: 36px;
+  }
+
+  .insight-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 14px;
+  }
+
+  .insight-title {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #e8f4ff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .insight-excerpt {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .insight-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .insights-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .insight-side {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    padding: 28px 28px;
+    flex: 1;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .insight-side:hover { background: rgba(0,30,60,0.85); }
+
+  .insight-side .insight-tag { font-size: 0.6rem; }
+  .insight-side .insight-title { font-size: 1.1rem; line-height: 1.3; margin-bottom: 10px; }
+  .insight-side .insight-excerpt { font-size: 0.82rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .insight-side .insight-meta { margin-top: 16px; padding-top: 16px; }
+
+  /* ─── TEAM ─── */
+  #team {
+    padding: 120px 5%;
+    background: linear-gradient(180deg, transparent, rgba(0,20,40,0.4), transparent);
+  }
+
+  .team-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+  }
+
+  .team-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .team-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.25); }
+  .team-card:hover::before { opacity: 1; }
+
+  .team-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--navy-card), #0a2040);
+    border: 2px solid var(--border-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--cyan-dim);
+    position: relative;
+  }
+
+  .team-name {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e8f4ff;
+    margin-bottom: 4px;
+  }
+
+  .team-role {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyan-dim);
+    margin-bottom: 14px;
+  }
+
+  .team-bio {
+    font-size: 0.84rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  /* ─── CONTACT / CTA ─── */
+  #contact {
+    padding: 140px 5%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(0,132,255,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .contact-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .contact-inner .section-title {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    margin-bottom: 20px;
+  }
+
+  .contact-inner .section-desc {
+    font-size: 1.05rem;
+    margin-bottom: 48px;
+    max-width: 480px;
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .form-input, .form-select, .form-textarea {
+    background: rgba(0,20,40,0.6);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    padding: 13px 18px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    appearance: none;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(0,212,255,0.4);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+  }
+
+  .form-textarea { min-height: 130px; resize: vertical; }
+
+  .form-select option { background: var(--navy-card); }
+
+  .form-submit {
+    grid-column: 1 / -1;
+    width: 100%;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--cyan);
+    border: none;
+    padding: 18px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover {
+    background: var(--electric);
+    box-shadow: 0 0 40px rgba(0,212,255,0.4);
+  }
+
+  .contact-alternatives {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 50px;
+    flex-wrap: wrap;
+  }
+
+  .contact-alt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+  }
+
+  .contact-alt svg { color: var(--cyan); }
+  .contact-alt a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .contact-alt a:hover { color: var(--cyan); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: rgba(2,6,14,0.95);
+    border-top: 1px solid var(--border);
+    padding: 60px 5% 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .footer-brand p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.75;
+    margin-top: 18px;
+    max-width: 280px;
+  }
+
+  .footer-col h5 {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 22px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .footer-col ul li a:hover { color: var(--cyan); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 28px;
+  }
+
+  .footer-legal a {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-legal a:hover { color: var(--cyan); }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .threat-inner { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .contact-form { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .form-submit { grid-column: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 36px; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ─── MOBILE NAV TOGGLE ─── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  @media (max-width: 900px) { .nav-hamburger { display: flex; } }
+
+  .nav-hamburger span {
+    display: block;
+    width: 22px; height: 1.5px;
+    background: var(--text-dim);
+    transition: all 0.3s;
+  }
+
+  /* ─── CUSTOM SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.25); border-radius: 2px; }
+
+  /* ─── GLOW LINES ─── */
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0.3;
+    margin: 0;
+  }
+
+  /* ─── TERMINAL CURSOR ─── */
+  .cursor-blink {
+    display: inline-block;
+    width: 7px; height: 12px;
+    background: var(--cyan);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 34,28 2,28" stroke="#00d4ff" stroke-width="1.2" fill="none"/>
+        <polygon points="18,8 29,26 7,26" stroke="#00a8cc" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <circle cx="18" cy="19" r="4" fill="none" stroke="#00d4ff" stroke-width="1"/>
+        <line x1="18" y1="2" x2="18" y2="14" stroke="#00d4ff" stroke-width="0.8" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      CyberNova
+      <span class="logo-sub">Analytics Ltd</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#threat">Intelligence</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+
+  <div class="nav-cta">
+    <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Client Portal</button>
+    <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Request Briefing</button>
+    <div class="nav-hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      SOC Operations Active — 24/7 Threat Monitoring
+    </div>
+
+    <h1 class="hero-title">
+      Intelligence-Driven<br>
+      <em>Cyber Defence</em><br>
+      for the Enterprise
+    </h1>
+
+    <p class="hero-subtitle">
+      CyberNova Analytics delivers elite threat intelligence, advanced persistent threat hunting, and board-level cyber risk advisory for organisations operating at the highest levels of criticality.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn-primary btn-large" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Request Threat Briefing</button>
+      <button class="btn-ghost btn-ghost-large" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Capabilities</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">99<span>.7%</span></div>
+        <div class="stat-label">Threat Detection Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1<span>.2s</span></div>
+        <div class="stat-label">Mean Response Time</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">340<span>+</span></div>
+        <div class="stat-label">Enterprise Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">18<span>yr</span></div>
+        <div class="stat-label">Sector Experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>THREAT FEED</strong> APT-29 campaign targeting financial sector — <strong>STATUS:</strong> Countermeasures deployed</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>ADVISORY</strong> Critical CVE-2025-11447 — Patch validation complete</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>INTEL</strong> Ransomware-as-a-Service variant detected in EMEA — <strong>IOCs:</strong> Published</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>SYSTEM</strong> Zero-day exploit in enterprise VPN stack — Emergency advisory issued</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>REPORT</strong> Q2 2025 Threat Landscape Report now available — <strong>CLASSIFICATION:</strong> Client Restricted</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>THREAT FEED</strong> APT-29 campaign targeting financial sector — <strong>STATUS:</strong> Countermeasures deployed</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>ADVISORY</strong> Critical CVE-2025-11447 — Patch validation complete</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>INTEL</strong> Ransomware-as-a-Service variant detected in EMEA — <strong>IOCs:</strong> Published</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>SYSTEM</strong> Zero-day exploit in enterprise VPN stack — Emergency advisory issued</div>
+    <div class="ticker-item"><span class="ticker-sep">▸</span> <strong>REPORT</strong> Q2 2025 Threat Landscape Report now available — <strong>CLASSIFICATION:</strong> Client Restricted</div>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="eyebrow">// Core Capabilities</div>
+    <h2 class="section-title">Enterprise Security Services</h2>
+    <p class="section-desc">A full-spectrum cyber defence practice built for organisations where failure is not an option.</p>
+  </div>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="25" cy="25" r="20"/>
+        <path d="M25 10 L25 20 M25 30 L25 40 M10 25 L20 25 M30 25 L40 25"/>
+        <circle cx="25" cy="25" r="5" fill="currentColor" opacity="0.3"/>
+        <circle cx="25" cy="25" r="10" stroke-dasharray="3 3"/>
+      </svg>
+      <h3 class="service-title">Threat Intelligence & Attribution</h3>
+      <p class="service-desc">Operational threat intelligence fused from global sensor networks, dark web monitoring, and nation-state actor tracking. Real-time IOC enrichment and adversary profiling for proactive defence.</p>
+      <a href="#contact" class="service-link">Learn More →</a>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="8" y="12" width="34" height="26" rx="2"/>
+        <path d="M16 22 L22 28 L34 16"/>
+        <path d="M8 19 L42 19" stroke-dasharray="2 2"/>
+      </svg>
+      <h3 class="service-title">Managed Detection & Response</h3>
+      <p class="service-desc">24/7/365 SOC operations powered by proprietary AI detection engines, SOAR automation, and elite human analysts. Sub-2-second detection-to-containment capability across hybrid environments.</p>
+      <a href="#contact" class="service-link">Learn More →</a>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M25 5 L42 15 L42 30 C42 38 34 44 25 47 C16 44 8 38 8 30 L8 15 Z"/>
+        <path d="M18 25 L22 29 L32 19"/>
+      </svg>
+      <h3 class="service-title">Red Team & Adversarial Simulation</h3>
+      <p class="service-desc">Nation-state calibre offensive operations simulating APT intrusion chains, supply chain attacks, and social engineering campaigns. Full-scope red team engagements with executive-level reporting.</p>
+      <a href="#contact" class="service-link">Learn More →</a>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="10" y="8" width="30" height="34" rx="2"/>
+        <path d="M16 18 L34 18 M16 24 L34 24 M16 30 L26 30"/>
+        <circle cx="34" cy="34" r="6" stroke-width="1.5"/>
+        <path d="M31 34 L33 36 L37 32" stroke-width="1.2"/>
+      </svg>
+      <h3 class="service-title">Cyber Risk & Compliance</h3>
+      <p class="service-desc">Quantitative cyber risk modelling aligned to NIST CSF, ISO 27001, DORA, and NIS2. Board-ready risk reporting, third-party vendor assessments, and regulatory gap analysis.</p>
+      <a href="#contact" class="service-link">Learn More →</a>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">05</span>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="25" cy="16" r="8"/>
+        <path d="M14 42 C14 34 36 34 36 42"/>
+        <path d="M32 20 L42 12 M32 24 L42 28" stroke-dasharray="2 2"/>
+        <circle cx="42" cy="12" r="3"/>
+        <circle cx="42" cy="28" r="3"/>
+      </svg>
+      <h3 class="service-title">Incident Response & Forensics</h3>
+      <p class="service-desc">Elite DFIR capabilities with legal-grade evidence preservation, memory forensics, and executive crisis communications. On-site deployment within 4 hours globally for critical incidents.</p>
+      <a href="#contact" class="service-link">Learn More →</a>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">06</span>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="6" y="20" width="16" height="22" rx="1"/>
+        <rect x="28" y="12" width="16" height="30" rx="1"/>
+        <path d="M14 16 L14 8 M36 8 L36 6"/>
+        <path d="M6 40 L44 40"/>
+        <circle cx="14" cy="8" r="3"/>
+        <circle cx="36" cy="6" r="3"/>
+      </svg>
+      <h3 class="service-title">Security Architecture Advisory</h3>
+      <p class="service-desc">Zero-trust architecture design, cloud security transformation, and OT/ICS security for critical national infrastructure. Independent technical assurance for major transformation programmes.</p>
+      <a href="#contact" class="service-link">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ═══ THREAT INTEL ═══ -->
+<section id="threat">
+  <div class="threat-inner">
+    <div class="threat-visual reveal">
+      <div class="threat-screen">
+        <div class="screen-header">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+          <span class="screen-title">NOVA-SENTINEL // Threat Operations Platform v4.2</span>
+        </div>
+        <div class="screen-body" id="logScreen">
+          <div class="log-line"><span class="log-time">09:14:02Z</span><span class="log-level-ok">[SYS]</span><span class="log-msg">Platform initialised. All sensors nominal.</span></div>
+          <div class="log-line"><span class="log-time">09:14:07Z</span><span class="log-level-info">[INTEL]</span><span class="log-msg">Ingesting 4.2M IoCs from 38 global feeds...</span></div>
+          <div class="log-line"><span class="log-time">09:14:19Z</span><span class="log-level-warn">[HUNT]</span><span class="log-msg">Anomalous lateral movement detected — Host: 10.4.21.88</span></div>
+          <div class="log-line"><span class="log-time">09:14:23Z</span><span class="log-level-info">[AI]</span><span class="log-msg">Behavioural model confidence: 97.3% — APT-UNC3286</span></div>
+          <div class="log-line"><span class="log-time">09:14:31Z</span><span class="log-level-crit">[ALERT]</span><span class="log-msg">CRITICAL: Credential dump attempt — LSASS memory access</span></div>
+          <div class="log-line"><span class="log-time">09:14:31Z</span><span class="log-level-ok">[SOAR]</span><span class="log-msg">Automated response triggered — Session isolation applied</span></div>
+          <div class="log-line"><span class="log-time">09:14:35Z</span><span class="log-level-info">[CASE]</span><span class="log-msg">IR-2025-4417 opened — Analyst Chen assigned</span></div>
+          <div class="log-line"><span class="log-time">09:14:40Z</span><span class="log-level-ok">[NET]</span><span class="log-msg">East segment quarantine enforced. Blast radius contained.</span></div>
+          <div class="log-line"><span class="log-time">09:14:52Z</span><span class="log-level-info">[FORENS]</span><span class="log-msg">Memory image acquired. Artefact collection in progress...</span></div>
+          <div class="log-line"><span class="log-time">09:15:01Z</span><span class="log-level-warn">[INTEL]</span><span class="log-msg">C2 beacon identified: 185.244.31.74 (RU/ASN49981)</span></div>
+          <div class="log-line"><span class="log-time">09:15:08Z</span><span class="log-level-ok">[BLOCK]</span><span class="log-msg">C2 infrastructure sinkholed. Attribution chain complete.<span class="cursor-blink"></span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="threat-content reveal">
+      <div class="eyebrow">// Nova Sentinel Platform</div>
+      <h2 class="section-title">AI-Augmented Threat Operations</h2>
+      <div class="threat-features">
+        <div class="threat-feature">
+          <div class="feat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <div class="feat-text">
+            <h4>Real-Time Detection Engine</h4>
+            <p>Processes 4.2 billion security events per day with sub-second detection across endpoint, network, identity, and cloud telemetry.</p>
+          </div>
+        </div>
+        <div class="threat-feature">
+          <div class="feat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+            </svg>
+          </div>
+          <div class="feat-text">
+            <h4>Adversary Intelligence Graph</h4>
+            <p>Proprietary knowledge graph maps 1,200+ threat actor TTPs, infrastructure, and campaign relationships in real time.</p>
+          </div>
+        </div>
+        <div class="threat-feature">
+          <div class="feat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <div class="feat-text">
+            <h4>Autonomous SOAR Response</h4>
+            <p>Machine-speed containment playbooks execute isolation, blocking, and evidence preservation within milliseconds of detection.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ═══ CLIENTS ═══ -->
+<section id="clients">
+  <div class="clients-inner reveal">
+    <p class="clients-label">Trusted by critical infrastructure, financial institutions, and sovereign organisations globally</p>
+    <div class="clients-logos">
+      <span class="client-logo">Meridian Bank</span>
+      <span class="client-logo">Vantara Group</span>
+      <span class="client-logo">HeliosEnergy</span>
+      <span class="client-logo">Centrix Capital</span>
+      <span class="client-logo">Nexara Defence</span>
+      <span class="client-logo">TerraNet AG</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <div class="eyebrow">// Who We Are</div>
+        <h2 class="section-title">Built by Operators. <em style="font-style:italic;color:var(--cyan)">For Defenders.</em></h2>
+        <p>CyberNova Analytics was founded in 2007 by veterans of UK GCHQ, NSA Tailored Access Operations, and elite tier-1 SOC environments. We exist to give private-sector organisations access to intelligence and capabilities previously reserved for nation-states.</p>
+        <p>Our practitioner-led model means every engagement is led by analysts with real-world adversarial experience — not junior consultants working from frameworks. We operate with the discretion and professionalism demanded by the world's most sensitive environments.</p>
+        <p>Headquartered in London with operations in Washington D.C., Singapore, and Frankfurt, we provide round-the-clock coverage aligned to global threat timezones.</p>
+
+        <div class="certifications">
+          <span class="cert-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> CREST Certified</span>
+          <span class="cert-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> ISO 27001</span>
+          <span class="cert-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> SC Cleared Staff</span>
+          <span class="cert-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> FCA Registered</span>
+        </div>
+      </div>
+
+      <div class="about-sigil reveal">
+        <div class="metric-card">
+          <div class="metric-row">
+            <div>
+              <div class="metric-val">4<span>.2B</span></div>
+              <div class="metric-lbl">Events processed daily</div>
+            </div>
+            <div>
+              <div class="metric-val">180<span>+</span></div>
+              <div class="metric-lbl">Countries monitored</div>
+            </div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-row">
+            <div>
+              <div class="metric-val">0<span>.3%</span></div>
+              <div class="metric-lbl">False positive rate</div>
+            </div>
+            <div>
+              <div class="metric-val">8<span>min</span></div>
+              <div class="metric-lbl">MTTR on P1 incidents</div>
+            </div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div style="text-align:center;padding:10px 0;">
+            <div class="metric-val" style="font-size:3.5rem;">340<span>+</span></div>
+            <div class="metric-lbl">Active enterprise retainers across 42 countries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ═══ INSIGHTS ═══ -->
+<section id="insights">
+  <div class="section-header reveal">
+    <div class="eyebrow">// Intelligence Briefings</div>
+    <h2 class="section-title">Threat Landscape Insights</h2>
+    <p class="section-desc">Practitioner analysis of emerging threats, adversary campaigns, and defensive strategies from our intelligence teams.</p>
+  </div>
+
+  <div class="insights-grid reveal">
+    <div class="insight-main">
+      <div class="insight-img">
+        <div class="insight-img-gfx">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#00d4ff" stroke-width="1">
+            <circle cx="20" cy="20" r="16" opacity="0.6"/>
+            <path d="M20 4 L20 36 M4 20 L36 20" opacity="0.3"/>
+            <circle cx="20" cy="20" r="4" fill="#00d4ff" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="insight-body">
+        <div class="insight-tag">// Intelligence Report — Critical Infrastructure</div>
+        <h3 class="insight-title">The Rise of Volt Typhoon: Pre-Positioning Strategies Targeting Western CNI</h3>
+        <p class="insight-excerpt">Our threat intelligence team has identified a significant escalation in Volt Typhoon's Living-off-the-Land (LotL) techniques, targeting energy grid SCADA systems, water treatment facilities, and transportation networks. This report provides actionable countermeasures derived from active incident response engagements.</p>
+        <div class="insight-meta">
+          <span>Dr. Sarah Okafor, Principal Analyst</span>
+          <span>28 Apr 2025</span>
+          <span>14 min read</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="insights-sidebar">
+      <div class="insight-side">
+        <div class="insight-tag">// Advisory — Financial Sector</div>
+        <h3 class="insight-title">Adversarial AI: How LLMs Are Being Weaponised for Spear-Phishing at Scale</h3>
+        <p class="insight-excerpt">Nation-state actors and eCrime groups are leveraging large language models to generate hyper-targeted, contextually aware phishing campaigns that defeat traditional email security controls.</p>
+        <div class="insight-meta">
+          <span>J. Petrov, CTI Lead</span>
+          <span>21 Apr 2025</span>
+        </div>
+      </div>
+      <div class="insight-side">
+        <div class="insight-tag">// Research — Cloud Security</div>
+        <h3 class="insight-title">Token Hijacking in Multi-Cloud IAM: Exploiting Federated Identity Trust Chains</h3>
+        <p class="insight-excerpt">CyberNova Research has identified novel token exfiltration techniques exploiting OIDC trust relationships across AWS, Azure, and GCP in hybrid enterprise environments.</p>
+        <div class="insight-meta">
+          <span>A. Nakamura, Red Team Lead</span>
+          <span>15 Apr 2025</span>
+        </div>
+      </div>
+      <div class="insight-side">
+        <div class="insight-tag">// Regulatory — DORA Compliance</div>
+        <h3 class="insight-title">DORA Article 30: What Financial Entities Must Validate Before January 2026</h3>
+        <p class="insight-excerpt">A practitioner's guide to DORA ICT third-party risk requirements, with a readiness assessment framework developed from 40+ financial institution engagements.</p>
+        <div class="insight-meta">
+          <span>M. Kowalczyk, Risk Advisory</span>
+          <span>9 Apr 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ═══ TEAM ═══ -->
+<section id="team">
+  <div class="section-header reveal">
+    <div class="eyebrow">// Leadership</div>
+    <h2 class="section-title">The Practitioners</h2>
+    <p class="section-desc">A leadership team drawn from the world's most demanding intelligence, military, and enterprise security environments.</p>
+  </div>
+
+  <div class="team-grid reveal">
+    <div class="team-card">
+      <div class="team-avatar">JH</div>
+      <div class="team-name">James Harrington</div>
+      <div class="team-role">Chief Executive Officer</div>
+      <p class="team-bio">Former Director of Cyber Operations, UK GCHQ. 24 years leading national-level threat operations and intelligence collection programmes across Five Eyes partnerships.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">SO</div>
+      <div class="team-name">Dr. Sarah Okafor</div>
+      <div class="team-role">Chief Intelligence Officer</div>
+      <p class="team-bio">PhD in Adversarial Machine Learning, Imperial College London. Former Lead Analyst, NSA TAO. Specialist in APT attribution and nation-state cyber campaigns.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">AN</div>
+      <div class="team-name">Akira Nakamura</div>
+      <div class="team-role">VP, Red Team Operations</div>
+      <p class="team-bio">Former OFFSEC lead, Unit 8200. 16 years conducting offensive operations and penetration testing for defence ministries, central banks, and critical infrastructure operators.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">MK</div>
+      <div class="team-name">Maya Kowalczyk</div>
+      <div class="team-role">Head of Cyber Risk Advisory</div>
+      <p class="team-bio">Ex-CISO, Tier 1 Investment Bank. Expert in quantitative cyber risk modelling (FAIR), board communications, and regulatory compliance across EMEA financial services.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="eyebrow">// Engage CyberNova</div>
+    <h2 class="section-title">Request a Confidential Briefing</h2>
+    <p class="section-desc">Speak directly with a senior practitioner. All inquiries are handled with strict confidentiality under NDA.</p>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-input" placeholder="James">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-input" placeholder="Harrington">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Corporate Email</label>
+        <input type="email" class="form-input" placeholder="j.harrington@organisation.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Organisation</label>
+        <input type="text" class="form-input" placeholder="Organisation Name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Service Interest</label>
+        <select class="form-select form-input">
+          <option value="">Select a capability area...</option>
+          <option>Threat Intelligence & Attribution</option>
+          <option>Managed Detection & Response</option>
+          <option>Red Team & Adversarial Simulation</option>
+          <option>Incident Response & Forensics</option>
+          <option>Cyber Risk & Compliance</option>
+          <option>Security Architecture Advisory</option>
+          <option>Executive Briefing</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sector</label>
+        <select class="form-select form-input">
+          <option value="">Select your sector...</option>
+          <option>Financial Services</option>
+          <option>Critical National Infrastructure</option>
+          <option>Defence & Government</option>
+          <option>Healthcare</option>
+          <option>Technology</option>
+          <option>Legal & Professional Services</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Message / Threat Context</label>
+        <textarea class="form-textarea" placeholder="Briefly describe your security challenges or what you'd like to discuss. All communications are treated as strictly confidential."></textarea>
+      </div>
+      <button type="submit" class="form-submit btn-primary">Submit Confidential Inquiry →</button>
+    </form>
+
+    <div class="contact-alternatives">
+      <div class="contact-alt">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.38 2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+        <a href="tel:+442031234567">+44 (0)20 3123 4567</a>
+      </div>
+      <div class="contact-alt">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:intelligence@cybernova.co.uk">intelligence@cybernova.co.uk</a>
+      </div>
+      <div class="contact-alt">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>24/7 Emergency: <a href="tel:+442031234599">+44 (0)20 3123 4599</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="text-decoration:none;">
+          <div class="logo-mark">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,2 34,28 2,28" stroke="#00d4ff" stroke-width="1.2" fill="none"/>
+              <polygon points="18,8 29,26 7,26" stroke="#00a8cc" stroke-width="0.8" fill="none" opacity="0.5"/>
+              <circle cx="18" cy="19" r="4" fill="none" stroke="#00d4ff" stroke-width="1"/>
+              <line x1="18" y1="2" x2="18" y2="14" stroke="#00d4ff" stroke-width="0.8" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="logo-text">
+            CyberNova
+            <span class="logo-sub">Analytics Ltd</span>
+          </div>
+        </a>
+        <p>Enterprise-grade cyber defence, threat intelligence, and security advisory for organisations operating in high-threat environments. Discretion. Precision. Excellence.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Threat Intelligence</a></li>
+          <li><a href="#services">Managed Detection</a></li>
+          <li><a href="#services">Red Team Ops</a></li>
+          <li><a href="#services">Incident Response</a></li>
+          <li><a href="#services">Risk Advisory</a></li>
+          <li><a href="#services">Architecture Review</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Leadership</a></li>
+          <li><a href="#insights">Insights</a></li>
+          <li><a href="#contact">Careers</a></li>
+          <li><a href="#contact">Partners</a></li>
+          <li><a href="#contact">Press</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Locations</h5>
+        <ul>
+          <li><a href="#">London (HQ)</a></li>
+          <li><a href="#">Washington D.C.</a></li>
+          <li><a href="#">Singapore</a></li>
+          <li><a href="#">Frankfurt</a></li>
+          <li><a href="#">Canberra</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 CyberNova Analytics Ltd. Company No. 06142398. Registered in England & Wales.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Responsible Disclosure</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── SCROLL REVEAL ───
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${i * 0.06}s`;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // ─── LIVE LOG ANIMATION ───
+  const logs = [
+    { time: '09:15:22Z', lvl: 'info', cls: 'log-level-info', msg: 'Detonating suspicious payload in sandbox env...' },
+    { time: '09:15:29Z', lvl: 'warn', cls: 'log-level-warn', msg: 'Sandbox: Evasion attempt detected — VM aware code' },
+    { time: '09:15:33Z', lvl: 'crit', cls: 'log-level-crit', msg: 'CRITICAL: Novel dropper identified — Signature 0xA9F2' },
+    { time: '09:15:34Z', lvl: 'ok', cls: 'log-level-ok', msg: 'Threat intelligence record created — TI-2025-9924' },
+    { time: '09:15:41Z', lvl: 'info', cls: 'log-level-info', msg: 'IOC broadcast to 340 client environments...' },
+    { time: '09:15:45Z', lvl: 'ok', cls: 'log-level-ok', msg: 'Global IOC push complete. All sensors updated.' },
+    { time: '09:16:02Z', lvl: 'warn', cls: 'log-level-warn', msg: 'Port scan detected from 203.12.44.81 (CN)' },
+    { time: '09:16:07Z', lvl: 'ok', cls: 'log-level-ok', msg: 'Automated GeoIP block applied. No breach.' },
+    { time: '09:16:18Z', lvl: 'info', cls: 'log-level-info', msg: 'Hourly threat digest dispatched to client analysts.' },
+    { time: '09:16:31Z', lvl: 'ok', cls: 'log-level-ok', msg: 'All systems nominal. Monitoring continues...' },
+    { time: '09:16:44Z', lvl: 'crit', cls: 'log-level-crit', msg: 'ALERT: Phishing campaign targeting FS sector active' },
+    { time: '09:16:45Z', lvl: 'ok', cls: 'log-level-ok', msg: 'Flash advisory drafted — distribution: immediate' },
+  ];
+
+  let logIdx = 0;
+  const screen = document.getElementById('logScreen');
+
+  setInterval(() => {
+    if (!screen) return;
+    const entry = logs[logIdx % logs.length];
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML = `<span class="log-time">${entry.time}</span><span class="${entry.cls}">[${entry.lvl.toUpperCase()}]</span><span class="log-msg">${entry.msg}<span class="cursor-blink"></span></span>`;
+    
+    screen.querySelectorAll('.cursor-blink').forEach(c => c.remove());
+    
+    screen.appendChild(line);
+    
+    while (screen.children.length > 14) {
+      screen.removeChild(screen.firstChild);
+    }
+    
+    screen.scrollTop = screen.scrollHeight;
+    logIdx++;
+  }, 2400);
+
+  // ─── FORM SUBMIT ───
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Inquiry Received — A Senior Analyst Will Contact You';
+    btn.style.background = 'rgba(82,196,26,0.9)';
+    btn.style.color = '#fff';
+    btn.style.clipPath = 'none';
+    btn.disabled = true;
+  }
+
+  // ─── NAV SCROLL EFFECT ───
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 40) {
+      nav.style.borderBottomColor = 'rgba(0,212,255,0.18)';
+    } else {
+      nav.style.borderBottomColor = 'rgba(0,212,255,0.12)';
+    }
+  });
+</script>
+</body>
+</html>

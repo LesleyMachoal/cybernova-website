@@ -1,0 +1,79 @@
+[
+  {
+    "id": "1",
+    "title": "Cybersecurity Summit 2024",
+    "date": "2024-06-15",
+    "time": "09:00",
+    "location": "San Francisco Convention Center",
+    "description": "Annual conference bringing together security leaders and innovators",
+    "link": "https://example.com/summit",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  },
+  {
+    "id": "2",
+    "title": "Threat Intelligence Webinar",
+    "date": "2024-05-10",
+    "time": "14:00",
+    "location": "Virtual",
+    "description": "Expert panel discussing emerging cyber threats",
+    "link": "https://example.com/webinar",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  },
+  {
+    "id": "3",
+    "title": "Cloud Security Workshop",
+    "date": "2024-07-18",
+    "time": "10:30",
+    "location": "London Tech Hub",
+    "description": "Hands-on workshop covering cloud posture, identity, and workload protection",
+    "link": "https://example.com/cloud-workshop",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  },
+  {
+    "id": "4",
+    "title": "Incident Response Drill",
+    "date": "2024-08-08",
+    "time": "13:00",
+    "location": "Virtual",
+    "description": "Live simulation for teams to practice containment and escalation",
+    "link": "https://example.com/incident-drill",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  },
+  {
+    "id": "5",
+    "title": "Security Leaders Roundtable",
+    "date": "2024-09-12",
+    "time": "11:00",
+    "location": "New York City",
+    "description": "Executive discussion on risk, resilience, and cyber strategy",
+    "link": "https://example.com/roundtable",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  },
+  {
+    "id": "6",
+    "title": "Phishing Defense Lab",
+    "date": "2024-10-03",
+    "time": "15:00",
+    "location": "Virtual",
+    "description": "Practical session on phishing defense, email security, and user training",
+    "link": "https://example.com/phishing-lab",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  },
+  {
+    "id": "7",
+    "title": "Annual Security Summit",
+    "date": "2024-11-21",
+    "time": "09:30",
+    "location": "Dubai World Trade Centre",
+    "description": "Flagship event featuring sessions on threats, compliance, and automation",
+    "link": "https://example.com/security-summit",
+    "status": "upcoming",
+    "thumbnail": "/assets/event-placeholder.svg"
+  }
+]

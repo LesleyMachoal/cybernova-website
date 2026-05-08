@@ -1,0 +1,82 @@
+[
+  {
+    "id": "gallery-001",
+    "image_url": "/uploads/gallery/1.jpg",
+    "title": "Network Security Workshop - Day 1",
+    "description": "Team members discussing advanced network security protocols",
+    "category": "workshop",
+    "created_at": "2025-11-15T10:30:00Z"
+  },
+  {
+    "id": "gallery-002",
+    "image_url": "/uploads/gallery/2.jpg",
+    "title": "Incident Response Training",
+    "description": "Live incident response simulation exercise",
+    "category": "training",
+    "created_at": "2025-11-14T14:20:00Z"
+  },
+  {
+    "id": "gallery-003",
+    "image_url": "/uploads/gallery/3.jpg",
+    "title": "Cybersecurity Conference 2025",
+    "description": "Expert panel discussing emerging threats",
+    "category": "event",
+    "created_at": "2025-11-13T09:45:00Z"
+  },
+  {
+    "id": "gallery-004",
+    "image_url": "/uploads/gallery/4.jpg",
+    "title": "Team Building - Security Hackathon",
+    "description": "CyberNova team collaborating during hackathon",
+    "category": "workshop",
+    "created_at": "2025-11-12T16:10:00Z"
+  },
+  {
+    "id": "gallery-005",
+    "image_url": "/uploads/gallery/5.jpg",
+    "title": "Endpoint Protection Deep Dive",
+    "description": "Technical training on endpoint detection and response",
+    "category": "training",
+    "created_at": "2025-11-11T11:00:00Z"
+  },
+  {
+    "id": "gallery-006",
+    "image_url": "/uploads/gallery/6.jpg",
+    "title": "Client Workshop - Identity & Access",
+    "description": "Zero-trust implementation workshop for enterprise client",
+    "category": "workshop",
+    "created_at": "2025-11-10T13:30:00Z"
+  },
+  {
+    "id": "gallery-007",
+    "image_url": "/uploads/gallery/7.jpg",
+    "title": "Security Awareness Training Session",
+    "description": "Staff training on phishing and social engineering",
+    "category": "training",
+    "created_at": "2025-11-09T10:15:00Z"
+  },
+  {
+    "id": "gallery-008",
+    "image_url": "/uploads/gallery/8.jpg",
+    "title": "Cloud Security Workshop",
+    "description": "Policy-driven protection for cloud workloads training",
+    "category": "workshop",
+    "created_at": "2025-11-08T15:45:00Z"
+  },
+  {
+    "id": "gallery-009",
+    "image_url": "/uploads/gallery/9.jpg",
+    "title": "Compliance and Audit Workshop",
+    "description": "Preparing organizations for security audits",
+    "category": "training",
+    "created_at": "2025-11-07T09:20:00Z"
+  },
+  {
+    "id": "gallery-010",
+    "image_url": "/uploads/gallery/10.jpg",
+    "title": "Annual Security Summit 2025",
+    "description": "CyberNova leadership presenting company achievements",
+    "category": "event",
+    "created_at": "2025-11-06T12:00:00Z"
+  }
+]
