@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { TerminalAnimation } from '../ui/TerminalAnimation';
 
 export function HeroSection() {
   return (
@@ -48,9 +49,7 @@ export function HeroSection() {
         </div>
         <div className="hero-media">
           <div className="glass-card">
-            <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-secondary)' }}>
-              Video / Illustration placeholder
-            </div>
+            <TerminalAnimation />
           </div>
         </div>
       </div>
