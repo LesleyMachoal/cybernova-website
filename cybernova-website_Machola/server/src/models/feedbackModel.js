@@ -31,10 +31,17 @@ function writeLocalFeedback(arr) {
 
 export class FeedbackModel {
   static async createFeedback(payload) {
+    // ensure defaults
+    const row = {
+      status: payload.status || 'pending',
+      created_at: payload.created_at || new Date().toISOString(),
+      ...payload,
+    };
+
     if (hasSupabaseConfig && supabase) {
       const { data, error } = await supabase
         .from('feedback')
-        .insert([payload])
+        .insert([row])
         .select('*')
         .single();
 
@@ -90,7 +97,8 @@ export class FeedbackModel {
       comment: (inquiry.description || '').trim(),
       company: inquiry.organization ? inquiry.organization.trim() : null,
       role: inquiry.job_title ? inquiry.job_title.trim() : null,
-      status: 'approved',
+      // do not auto-approve feedback created from inquiries; admin should approve
+      status: 'pending',
       source_inquiry_id: inquiry.id,
     };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FeedbackCard } from '@/components/ui/FeedbackCard';
+import { FeedbackSubmissionSection } from './FeedbackSubmissionSection';
 
 const DEFAULT_FEEDBACK = [
   {
@@ -61,6 +62,7 @@ const DEFAULT_FEEDBACK = [
 ];
 
 export function FeedbackSection() {
+  const [showForm, setShowForm] = useState(false);
   const [feedback, setFeedback] = useState(DEFAULT_FEEDBACK);
   const [loading, setLoading] = useState(true);
   const apiBase = import.meta.env.VITE_API_URL || '/api';
@@ -98,7 +100,33 @@ export function FeedbackSection() {
 
   return (
     <section className="container content-section">
-      <h2>Customer Feedback</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>Customer Feedback</h2>
+        <button
+          className="btn btn-secondary"
+          onClick={() => setShowForm(true)}
+          style={{ marginLeft: '1rem' }}
+        >
+          Leave Feedback
+        </button>
+      </div>
+
+      {showForm ? (
+        <>
+          <div className={`modal-overlay ${showForm ? 'active' : ''}`} onClick={() => setShowForm(false)} />
+          <div className={`modal-section ${showForm ? 'active' : ''}`}>
+            <div className="modal-panel glass">
+              <div className="modal-header">
+                <h2>Leave Feedback</h2>
+                <button className="modal-close" aria-label="Close" onClick={() => setShowForm(false)}>×</button>
+              </div>
+              <div className="modal-body">
+                <FeedbackSubmissionSection onClose={() => setShowForm(false)} isModal={true} />
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
       <div className="feedback-grid">
         {feedback.map((f) => (
           <FeedbackCard

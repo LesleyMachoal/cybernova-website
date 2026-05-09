@@ -29,7 +29,6 @@ export function ContactSection() {
       job_title: form.jobTitle.value.trim() || null,
       country: form.country.value.trim() || null,
       issue_type: form.issueType.value,
-      rating: Number(form.rating.value),
       description: form.description.value.trim(),
     };
 
@@ -38,7 +37,6 @@ export function ContactSection() {
     if (!data.name) newErrors.name = 'Name is required.';
     if (!data.email) newErrors.email = 'Email is required.';
     else if (!validateEmail(data.email)) newErrors.email = 'Enter a valid email.';
-    if (!data.rating || data.rating < 1 || data.rating > 5) newErrors.rating = 'Select a rating from 1 to 5.';
     if (!data.description) newErrors.description = 'Please describe your inquiry.';
 
     setErrors(newErrors);
@@ -116,18 +114,6 @@ export function ContactSection() {
             </select>
           </label>
         </div>
-
-        <label className="form-field">Rating
-          <select id="rating" name="rating" aria-invalid={!!errors.rating} defaultValue="">
-            <option value="" disabled>Choose a rating</option>
-            <option value="1">1 - Poor</option>
-            <option value="2">2 - Fair</option>
-            <option value="3">3 - Good</option>
-            <option value="4">4 - Very good</option>
-            <option value="5">5 - Excellent</option>
-          </select>
-          {errors.rating ? <div className="field-error">{errors.rating}</div> : null}
-        </label>
 
         <label className="form-field">Description
           <textarea id="description" name="description" rows="5" placeholder="How can we help?" aria-invalid={!!errors.description}></textarea>

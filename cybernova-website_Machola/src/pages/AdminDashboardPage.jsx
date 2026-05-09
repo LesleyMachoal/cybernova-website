@@ -1,4 +1,4 @@
-import { BarChart2, FileText, LayoutDashboard, MessageSquare, Settings, ShieldCheck, X, MessageCircle, Image, Star } from 'lucide-react';
+import { BarChart2, FileText, LayoutDashboard, MessageSquare, Settings, ShieldCheck, Menu, X, MessageCircle, Image, Star } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Bar, Pie } from 'react-chartjs-2';
@@ -35,12 +35,23 @@ const tabs = [
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
+const readJsonResponse = async (response) => {
+  const text = await response.text();
+
+  if (!text) {
+    return {};
+  }
+
+  return JSON.parse(text);
+};
+
 export function AdminDashboardPage() {
   const token = localStorage.getItem('cybernova_admin_token') || '';
   const apiBase = import.meta.env.VITE_API_URL || '/api';
 
   // ====== INQUIRIES STATE ======
   const [activeTab, setActiveTab] = useState('overview');
+  const [isAdminNavOpen, setIsAdminNavOpen] = useState(false);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -174,6 +185,21 @@ export function AdminDashboardPage() {
   });
   const [galleryUploadFile, setGalleryUploadFile] = useState(null);
 
+  useEffect(() => {
+    const syncAdminNavState = () => {
+      if (window.innerWidth > 980) {
+        setIsAdminNavOpen(true);
+      } else {
+        setIsAdminNavOpen(false);
+      }
+    };
+
+    syncAdminNavState();
+    window.addEventListener('resize', syncAdminNavState);
+
+    return () => window.removeEventListener('resize', syncAdminNavState);
+  }, []);
+
   // ====== FETCH FUNCTIONS ======
   const fetchInquiries = async () => {
     setLoading(true);
@@ -189,7 +215,7 @@ export function AdminDashboardPage() {
         return;
       }
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load inquiries');
       }
@@ -216,7 +242,7 @@ export function AdminDashboardPage() {
         return;
       }
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load articles');
       }
@@ -243,7 +269,7 @@ export function AdminDashboardPage() {
         return;
       }
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load services');
       }
@@ -270,7 +296,7 @@ export function AdminDashboardPage() {
         return;
       }
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load case studies');
       }
@@ -297,7 +323,7 @@ export function AdminDashboardPage() {
         return;
       }
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load events');
       }
@@ -324,7 +350,7 @@ export function AdminDashboardPage() {
         return;
       }
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load feedback');
       }
@@ -343,7 +369,7 @@ export function AdminDashboardPage() {
     try {
       const response = await fetch(`${apiBase}/gallery`);
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to load gallery');
       }
@@ -497,7 +523,7 @@ export function AdminDashboardPage() {
         body: JSON.stringify({ status: nextStatus }),
       });
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to update status');
       }
@@ -520,7 +546,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete inquiry');
       }
 
@@ -627,7 +653,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete article');
       }
 
@@ -722,7 +748,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete service');
       }
 
@@ -826,7 +852,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete case study');
       }
 
@@ -930,7 +956,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete event');
       }
 
@@ -951,7 +977,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete feedback');
       }
 
@@ -972,7 +998,7 @@ export function AdminDashboardPage() {
       });
 
       if (!response.ok) {
-        const payload = await response.json();
+        const payload = await readJsonResponse(response);
         throw new Error(payload.message || 'Failed to delete gallery item');
       }
 
@@ -998,7 +1024,7 @@ export function AdminDashboardPage() {
         }),
       });
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Failed to create gallery item');
       }
@@ -1029,7 +1055,7 @@ export function AdminDashboardPage() {
         body: formData,
       });
 
-      const payload = await response.json();
+      const payload = await readJsonResponse(response);
       if (!response.ok) throw new Error(payload.message || 'Failed to upload image');
 
       setGallery((prev) => [payload, ...prev]);
@@ -1073,16 +1099,35 @@ export function AdminDashboardPage() {
     URL.revokeObjectURL(url);
   };
 
+  const handleAdminTabSelect = (tabId) => {
+    setActiveTab(tabId);
+
+    if (window.innerWidth <= 980) {
+      setIsAdminNavOpen(false);
+    }
+  };
+
   // ====== RENDER ======
   return (
     <main className="admin-page min-h-screen bg-bg-primary text-text-primary">
       <div className="admin-shell">
-        <aside className="admin-sidebar glass">
-          <div className="mb-8 flex items-center gap-3">
-            <ShieldCheck className="h-7 w-7 text-accent-secondary" />
-            <div>
-              <div className="logo">CyberNova Admin</div>
+        <aside className={`admin-sidebar glass ${isAdminNavOpen ? 'nav-open' : 'nav-closed'}`}>
+          <div className="admin-sidebar-header">
+            <div className="mb-0 flex items-center gap-3">
+              <ShieldCheck className="h-7 w-7 text-accent-secondary" />
+              <div>
+                <div className="logo">CyberNova Admin</div>
+              </div>
             </div>
+            <button
+              type="button"
+              className="admin-nav-toggle"
+              aria-expanded={isAdminNavOpen}
+              aria-label={isAdminNavOpen ? 'Close admin navigation' : 'Open admin navigation'}
+              onClick={() => setIsAdminNavOpen((current) => !current)}
+            >
+              {isAdminNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
           <nav className="admin-nav">
             {tabs.map((tab) => {
@@ -1093,7 +1138,7 @@ export function AdminDashboardPage() {
                   key={tab.id}
                   type="button"
                   className={`nav-item ${active ? 'active' : ''}`}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => handleAdminTabSelect(tab.id)}
                 >
                   <Icon className="h-4 w-4" />
                   {tab.label}

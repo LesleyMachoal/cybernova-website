@@ -1,8 +1,13 @@
-import { FileText } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, ChevronUp, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function ArticleCard({ article, isFeatured }) {
-  const { title, excerpt, author, date, link, tags } = article;
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { title, excerpt, author, date, tags, content } = article;
+  const hasContent = Boolean(content?.trim());
+  const articleBody = hasContent ? content : excerpt;
+  const panelId = `article-panel-${article.id}`;
 
   return (
     <motion.article
@@ -26,10 +31,35 @@ export function ArticleCard({ article, isFeatured }) {
 
       <div className="card-body">
         <p className="card-excerpt">{excerpt}</p>
+        {isExpanded ? (
+          <div className="article-expansion" id={panelId} aria-live="polite">
+            <p className="article-expansion-text">{articleBody}</p>
+            <div className="article-expansion-meta">
+              <span>{author}</span>
+              {date ? <span>{date}</span> : null}
+            </div>
+            {Array.isArray(tags) && tags.length > 0 ? (
+              <div className="article-tags" aria-label="Article tags">
+                {tags.map((tag) => (
+                  <span key={tag} className="article-tag">{tag}</span>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
 
       <footer className="card-footer">
-        <a href={link} className="btn btn-small">Read more</a>
+        <button
+          type="button"
+          className="btn btn-small"
+          aria-expanded={isExpanded}
+          aria-controls={panelId}
+          onClick={() => setIsExpanded((current) => !current)}
+        >
+          {isExpanded ? 'Show less' : 'Read more'}
+          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
       </footer>
     </motion.article>
   );

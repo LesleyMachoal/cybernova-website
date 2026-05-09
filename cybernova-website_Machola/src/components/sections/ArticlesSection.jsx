@@ -54,7 +54,7 @@ export function ArticlesSection() {
           {articles.map((article, idx) => (
             <ArticleCard
               key={article.id}
-              isFeatured={idx === 0}
+              isFeatured={Boolean(article.featured)}
               article={{
                 ...article,
                 tags: Array.isArray(article.tags)

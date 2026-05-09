@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 
-export function FeedbackSubmissionSection() {
+export function FeedbackSubmissionSection({ onClose, isModal = false } = {}) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -70,8 +70,11 @@ export function FeedbackSubmissionSection() {
         role: '',
       });
 
-      // Hide success message after 5 seconds
-      setTimeout(() => setSuccess(false), 5000);
+      // Hide success message after 3 seconds and close modal if provided
+      setTimeout(() => {
+        setSuccess(false);
+        if (typeof onClose === 'function') onClose();
+      }, 3000);
     } catch (err) {
       setError(err.message || 'Error submitting feedback');
     } finally {
@@ -79,14 +82,8 @@ export function FeedbackSubmissionSection() {
     }
   };
 
-  return (
-    <section className="container content-section">
-      <h2>Share Your Feedback</h2>
-      <p style={{ textAlign: 'center', marginBottom: '2rem', opacity: 0.8 }}>
-        Help us improve by sharing your experience with CyberNova
-      </p>
-
-      <motion.form
+  const formElement = (
+    <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -97,8 +94,8 @@ export function FeedbackSubmissionSection() {
           margin: '0 auto',
           padding: '2rem',
           borderRadius: '12px',
-          background: 'rgba(0, 212, 255, 0.03)',
-          border: '1px solid rgba(0, 212, 255, 0.2)',
+          background: 'rgba(0, 212, 255, 0.14)',
+          border: '1px solid rgba(0, 212, 255, 0.4)',
         }}
       >
         {success && (
@@ -297,7 +294,7 @@ export function FeedbackSubmissionSection() {
           style={{
             width: '100%',
             padding: '0.75rem 1.5rem',
-            background: loading ? 'rgba(0, 212, 255, 0.3)' : 'rgba(0, 212, 255, 0.15)',
+              background: loading ? 'rgba(0, 212, 255, 0.35)' : 'rgba(0, 212, 255, 0.22)',
             border: '1px solid rgba(0, 212, 255, 0.5)',
             borderRadius: '6px',
             color: '#00d4ff',
@@ -309,6 +306,19 @@ export function FeedbackSubmissionSection() {
           {loading ? 'Submitting...' : 'Submit Feedback'}
         </Button>
       </motion.form>
+  );
+
+  if (isModal) {
+    return formElement;
+  }
+
+  return (
+    <section className="container content-section">
+      <h2>Share Your Feedback</h2>
+      <p style={{ textAlign: 'center', marginBottom: '2rem', opacity: 0.8 }}>
+        Help us improve by sharing your experience with CyberNova
+      </p>
+      {formElement}
     </section>
   );
 }

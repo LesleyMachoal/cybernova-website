@@ -23,6 +23,12 @@ export interface Article {
   id: string;
   title: string;
   excerpt: string;
+  featured?: boolean;
+  author?: string;
+  date?: string;
+  link?: string;
+  tags?: string[];
+  content?: string;
 }
 
 export interface GalleryItem {

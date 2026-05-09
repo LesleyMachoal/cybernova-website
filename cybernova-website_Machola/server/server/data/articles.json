@@ -143,18 +143,5 @@
     "status": "published",
     "created_at": "2026-05-03T00:00:00.000Z",
     "updated_at": "2026-05-03T00:00:00.000Z"
-  },
-  {
-    "id": "malese123-mac",
-    "title": "Malese123@mac",
-    "excerpt": "test qwerty qwerty qwerty qwerty qwerryt qwerty",
-    "author": "Amsks",
-    "date": "Mar 93",
-    "link": "#https://www.5dvision.com/post/what-is-scrum/",
-    "tags": [],
-    "thumbnail": "",
-    "status": "published",
-    "created_at": "2026-05-06T19:39:43.000Z",
-    "updated_at": "2026-05-06T19:39:43.000Z"
   }
 ]

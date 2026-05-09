@@ -99,14 +99,6 @@ export class InquiryModel {
 
       if (error) throw new Error(error.message);
 
-      if (status === 'resolved') {
-        try {
-          await FeedbackModel.createFeedbackFromInquiry(data);
-        } catch (err) {
-          console.error('Failed to generate feedback from inquiry', err);
-        }
-      }
-
       return data;
     }
 
@@ -116,16 +108,9 @@ export class InquiryModel {
     list[idx].status = status;
     writeLocalInquiries(list);
 
-    const updatedInquiry = list[idx];
-    if (status === 'resolved') {
-      try {
-        await FeedbackModel.createFeedbackFromInquiry(updatedInquiry);
-      } catch (err) {
-        console.error('Failed to generate feedback from inquiry', err);
-      }
-    }
-
-    return updatedInquiry;
+    list[idx] = { ...list[idx] };
+    writeLocalInquiries(list);
+    return list[idx];
   }
 
   static async deleteInquiry(id) {
