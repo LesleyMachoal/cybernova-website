@@ -17,7 +17,33 @@ const app = express();
 const projectRoot = path.resolve(process.cwd(), '..');
 const distPath = path.join(projectRoot, 'dist');
 
-app.use(cors());
+// CORS Configuration
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'http://localhost:5999',
+      'https://lesleymachoal.github.io',
+      'https://lesleymachoal.github.io/cybernova-website/'
+    ];
+    
+    // Allow no origin (mobile apps, curl requests, same-origin requests)
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else if (process.env.NODE_ENV === 'production' && origin && origin.includes('render.com')) {
+      // Allow all Render subdomains in production
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads')));
