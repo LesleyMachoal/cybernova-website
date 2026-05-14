@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: cybernova-api
+    name: cybernova-website
     runtime: node
-    region: ohio
+    region: oregon
     plan: free
     rootDir: server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm --prefix ./server install
+    startCommand: npm --prefix ./server start
     envVars:
       - key: NODE_ENV
         value: production
