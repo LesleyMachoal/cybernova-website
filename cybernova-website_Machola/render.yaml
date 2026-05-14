@@ -4,9 +4,9 @@ services:
     runtime: node
     region: oregon
     plan: free
-    rootDir: server
-    buildCommand: npm install && npm run build && npm --prefix ./server install
-    startCommand: npm --prefix ./server start
+    rootDir: cybernova-website_Machola
+    buildCommand: npm install && npm run build && npm --prefix server install
+    startCommand: npm --prefix server start
     envVars:
       - key: NODE_ENV
         value: production
