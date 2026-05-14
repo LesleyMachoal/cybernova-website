@@ -4,6 +4,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "postinstall": "npm --prefix .. install && npm --prefix .. run build",
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
