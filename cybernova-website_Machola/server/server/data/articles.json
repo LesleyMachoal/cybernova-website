@@ -3,6 +3,8 @@
     "id": "threat-hunting-in-2026",
     "title": "Threat Hunting in 2026",
     "excerpt": "How to find advanced threats early",
+    "content": "Threat hunting works best when analysts combine good telemetry, a clear hypothesis, and disciplined investigation. Start with the most valuable assets, review authentication and endpoint anomalies, then correlate activity across identity, network, and cloud logs before escalating.",
+    "featured": true,
     "author": "R. Singh",
     "date": "Mar 2026",
     "link": "#",
@@ -12,13 +14,14 @@
     ],
     "thumbnail": "/assets/articles/threat-hunting.jpg",
     "status": "published",
-    "created_at": "2026-04-30T09:13:55.944Z",
-    "updated_at": "2026-04-30T09:13:55.944Z"
+    "created_at": "2026-04-30T00:00:00.000Z",
+    "updated_at": "2026-04-30T00:00:00.000Z"
   },
   {
     "id": "soc-modernisation",
     "title": "SOC Modernisation",
     "excerpt": "Building an efficient security operations centre",
+    "content": "A modern SOC is less about volume and more about signal. Automation should remove repetitive triage work, while clear playbooks, metrics, and escalation paths help analysts focus on the highest-risk events.",
     "author": "L. Patel",
     "date": "Feb 2026",
     "link": "#",
@@ -28,30 +31,14 @@
     ],
     "thumbnail": "/assets/articles/soc-modern.jpg",
     "status": "published",
-    "created_at": "2026-04-30T09:13:55.944Z",
-    "updated_at": "2026-04-30T09:13:55.944Z"
-  },
-  {
-    "id": "advanced-threat-detection",
-    "title": "Advanced Threat Detection",
-    "excerpt": "Discover methods and tools for detecting advanced threats in your environment",
-    "author": "John Smith",
-    "date": "Apr 2026",
-    "link": "/blog/threat-detection",
-    "tags": [
-      "Detection",
-      "Threats",
-      "Security"
-    ],
-    "thumbnail": "/assets/articles/detection.jpg",
-    "status": "published",
-    "created_at": "2026-04-30T09:25:32.894Z",
-    "updated_at": "2026-04-30T09:25:32.894Z"
+    "created_at": "2026-04-30T00:00:00.000Z",
+    "updated_at": "2026-04-30T00:00:00.000Z"
   },
   {
     "id": "zero-trust-security",
     "title": "Zero Trust Security Framework",
     "excerpt": "Implementing zero-trust architecture for maximum protection",
+    "content": "Zero trust succeeds when identity, device health, and least privilege are enforced continuously. Every request should be evaluated with context instead of assuming trust because a user or device is already inside the network.",
     "author": "M. Chen",
     "date": "Apr 2026",
     "link": "#",
@@ -61,13 +48,14 @@
     ],
     "thumbnail": "/assets/default-placeholder.svg",
     "status": "published",
-    "created_at": "2026-04-30T15:25:00.000Z",
-    "updated_at": "2026-04-30T15:25:00.000Z"
+    "created_at": "2026-04-30T00:00:00.000Z",
+    "updated_at": "2026-04-30T00:00:00.000Z"
   },
   {
     "id": "incident-response-playbook",
     "title": "Building an Incident Response Playbook",
     "excerpt": "A practical framework for faster containment and recovery",
+    "content": "A useful incident response playbook keeps roles, escalation triggers, and communication steps simple. Teams should be able to open it during pressure and immediately know what to isolate, who to notify, and how to preserve evidence.",
     "author": "A. Johnson",
     "date": "May 2026",
     "link": "#",
@@ -84,6 +72,7 @@
     "id": "cloud-security-posture",
     "title": "Cloud Security Posture Management",
     "excerpt": "How to keep cloud environments visible, compliant, and resilient",
+    "content": "Cloud posture management works best as a continuous loop: discover assets, compare them against policy, prioritize drift, and close the highest-risk gaps first. Visibility is the foundation of every later control.",
     "author": "S. Khan",
     "date": "May 2026",
     "link": "#",
@@ -100,6 +89,7 @@
     "id": "phishing-awareness-training",
     "title": "Phishing Awareness That Actually Works",
     "excerpt": "Designing training programs that reduce risky clicks",
+    "content": "Awareness training changes behavior when it is practical, repeated, and tied to real examples. Simulated attacks, short feedback loops, and role-specific guidance produce better results than one-off presentations.",
     "author": "N. Walker",
     "date": "Apr 2026",
     "link": "#",
@@ -116,6 +106,7 @@
     "id": "supply-chain-risk",
     "title": "Reducing Supply Chain Risk",
     "excerpt": "Assessing third-party exposure before it becomes an incident",
+    "content": "Third-party risk management should start with critical dependencies, not a long vendor checklist. Focus on the suppliers that touch sensitive data, identity, payments, or production systems and verify controls before issues spread.",
     "author": "K. Rivera",
     "date": "Mar 2026",
     "link": "#",
@@ -132,6 +123,7 @@
     "id": "security-automation",
     "title": "Security Automation for Lean Teams",
     "excerpt": "Where automation creates the biggest operational lift",
+    "content": "Lean teams get the most value from automation when it handles alert enrichment, ticket creation, and repetitive containment tasks. The goal is to reduce manual toil so analysts can spend time making decisions, not copying data between tools.",
     "author": "D. Nguyen",
     "date": "Feb 2026",
     "link": "#",
@@ -143,5 +135,92 @@
     "status": "published",
     "created_at": "2026-05-03T00:00:00.000Z",
     "updated_at": "2026-05-03T00:00:00.000Z"
+  },
+  {
+    "id": "api-security-best-practices",
+    "title": "API Security Best Practices in 2026",
+    "excerpt": "Protecting your APIs from modern threats",
+    "content": "APIs are the backbone of modern applications, but they're often overlooked in security planning. Implement strict authentication, rate limiting, and input validation. Monitor for unusual access patterns and maintain comprehensive audit logs to detect and respond to breaches quickly.",
+    "author": "E. Martinez",
+    "date": "May 2026",
+    "link": "#",
+    "tags": [
+      "API Security",
+      "Development"
+    ],
+    "thumbnail": "/assets/default-placeholder.svg",
+    "status": "published",
+    "created_at": "2026-05-10T00:00:00.000Z",
+    "updated_at": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "ransomware-defense-strategy",
+    "title": "Building a Ransomware Defense Strategy",
+    "excerpt": "Multi-layered approach to prevent extortion attacks",
+    "content": "Ransomware defense requires a multi-layered approach: immutable backups, network segmentation, email filtering, endpoint hardening, and rapid detection. Organizations that survive attacks intact are those that invest in visibility, backups, and incident response drills before an attack occurs.",
+    "author": "J. Thompson",
+    "date": "May 2026",
+    "link": "#",
+    "tags": [
+      "Ransomware",
+      "Defense"
+    ],
+    "thumbnail": "/assets/default-placeholder.svg",
+    "status": "published",
+    "created_at": "2026-05-10T00:00:00.000Z",
+    "updated_at": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "identity-access-management",
+    "title": "Identity and Access Management Fundamentals",
+    "excerpt": "The foundation of modern security.by gupt",
+    "content": "Strong identity and access management is the foundation of all security. Implement multi-factor authentication, enforce least privilege access, monitor privileged account activity, and regularly audit permissions. When identity is controlled, the blast radius of any breach is dramatically reduced.",
+    "author": "P. Gupta",
+    "date": "May 2026",
+    "link": "#",
+    "tags": [
+      "Identity",
+      "IAM",
+      "Access Control"
+    ],
+    "thumbnail": "/assets/default-placeholder.svg",
+    "status": "published",
+    "created_at": "2026-05-11T00:00:00.000Z",
+    "updated_at": "2026-05-14T14:19:26.485Z"
+  },
+  {
+    "id": "security-metrics-kpis",
+    "title": "Measuring Security: Metrics That Matter",
+    "excerpt": "Key performance indicators for security teams",
+    "content": "Effective security metrics go beyond counts and compliance checkboxes. Track mean time to detect, mean time to respond, vulnerability remediation rate, and false positive ratio. These forward-looking metrics reveal the true effectiveness of your security program and guide resource allocation decisions.",
+    "author": "O. Hassan",
+    "date": "May 2026",
+    "link": "#",
+    "tags": [
+      "Metrics",
+      "KPIs",
+      "Measurement"
+    ],
+    "thumbnail": "/assets/default-placeholder.svg",
+    "status": "published",
+    "created_at": "2026-05-12T00:00:00.000Z",
+    "updated_at": "2026-05-12T00:00:00.000Z"
+  },
+  {
+    "id": "addidas",
+    "title": "Addidas",
+    "excerpt": "qwerte qertttyy qwert qett qet",
+    "author": "Mac",
+    "date": "March 2001",
+    "link": "#",
+    "tags": [
+      "phishing"
+    ],
+    "featured": false,
+    "content": "",
+    "thumbnail": "",
+    "status": "published",
+    "created_at": "2026-05-14T14:18:51.844Z",
+    "updated_at": "2026-05-14T14:18:51.844Z"
   }
 ]

@@ -1,28 +1,34 @@
 [
   {
-    "id": "1",
-    "name": "Network Security",
-    "description": "Comprehensive network security solutions to protect your infrastructure from threats",
+    "id": "1778768416911",
+    "name": "QWERTY",
+    "description": "ceerwe wqwrrttt ",
     "icon": "shield-network",
-    "price": "Standard",
-    "thumbnail": "/assets/service-placeholder.svg",
-    "updated_at": "2026-05-06T19:40:12.190Z"
+    "price": "custom",
+    "created_at": "2026-05-14T14:20:16.911Z",
+    "updated_at": "2026-05-14T14:20:16.911Z"
   },
   {
     "id": "2",
-    "name": "Endpoint Protection",
+    "name": "Endpoint Detection",
     "description": "Advanced endpoint detection and response for workstations and servers",
     "icon": "laptop-shield",
     "price": "Custom",
-    "thumbnail": "/assets/service-placeholder.svg"
+    "link": "/articles",
+    "linkLabel": "Read technical articles",
+    "thumbnail": "/assets/service-placeholder.svg",
+    "updated_at": "2026-05-14T06:35:03.737Z"
   },
   {
     "id": "3",
-    "name": "Identity & Access",
+    "name": "Identity",
     "description": "Zero-trust identity and access management solutions",
     "icon": "key",
     "price": "Custom",
-    "thumbnail": "/assets/service-placeholder.svg"
+    "link": "/projects",
+    "linkLabel": "View related projects",
+    "thumbnail": "/assets/service-placeholder.svg",
+    "updated_at": "2026-05-14T09:46:45.045Z"
   },
   {
     "id": "4",
@@ -30,6 +36,8 @@
     "description": "24/7 visibility into suspicious activity and potential breaches",
     "icon": "radar",
     "price": "Custom",
+    "link": "/projects",
+    "linkLabel": "View related projects",
     "thumbnail": "/assets/service-placeholder.svg"
   },
   {
@@ -38,6 +46,8 @@
     "description": "Policy-driven protection for cloud workloads and identities",
     "icon": "cloud",
     "price": "Custom",
+    "link": "/events",
+    "linkLabel": "See training events",
     "thumbnail": "/assets/service-placeholder.svg"
   },
   {
@@ -46,14 +56,8 @@
     "description": "Rapid containment, forensics, and recovery support during incidents",
     "icon": "triangle-alert",
     "price": "Custom",
-    "thumbnail": "/assets/service-placeholder.svg"
-  },
-  {
-    "id": "7",
-    "name": "Compliance Advisory",
-    "description": "Audit readiness, policy guidance, and continuous compliance support",
-    "icon": "file-check",
-    "price": "Custom",
+    "link": "/articles",
+    "linkLabel": "Read technical articles",
     "thumbnail": "/assets/service-placeholder.svg"
   },
   {
@@ -62,6 +66,8 @@
     "description": "Awareness programs for staff, leadership, and technical teams",
     "icon": "graduation-cap",
     "price": "Custom",
+    "link": "/events",
+    "linkLabel": "See training events",
     "thumbnail": "/assets/service-placeholder.svg"
   }
 ]

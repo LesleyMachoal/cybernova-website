@@ -63,8 +63,8 @@ export function ServicesSection() {
                 title: service.name,
                 tagline: service.price || '',
                 description: service.description,
-                link: '/projects',
-                linkLabel: 'View related projects',
+                link: service.link || '/projects',
+                linkLabel: service.linkLabel || 'Learn more',
               }}
             />
           ))}

@@ -4,11 +4,12 @@
     "title": "Cybersecurity Summit 2024",
     "date": "2024-06-15",
     "time": "09:00",
-    "location": "San Francisco Convention Center",
+    "location": "San Francisco Convention",
     "description": "Annual conference bringing together security leaders and innovators",
     "link": "https://example.com/summit",
     "status": "upcoming",
-    "thumbnail": "/assets/event-placeholder.svg"
+    "thumbnail": "/assets/event-placeholder.svg",
+    "updated_at": "2026-05-14T14:20:38.681Z"
   },
   {
     "id": "2",
@@ -68,12 +69,13 @@
   {
     "id": "7",
     "title": "Annual Security Summit",
-    "date": "2024-11-21",
+    "date": "2026-11-21",
     "time": "09:30",
     "location": "Dubai World Trade Centre",
     "description": "Flagship event featuring sessions on threats, compliance, and automation",
     "link": "https://example.com/security-summit",
     "status": "upcoming",
-    "thumbnail": "/assets/event-placeholder.svg"
+    "thumbnail": "/assets/event-placeholder.svg",
+    "updated_at": "2026-05-14T09:19:27.993Z"
   }
 ]

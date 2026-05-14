@@ -45,6 +45,12 @@ const readJsonResponse = async (response) => {
   return JSON.parse(text);
 };
 
+// Helper function to show success message and auto-clear after 4 seconds
+const showSuccessMessage = (setSuccessFn, message) => {
+  setSuccessFn(message);
+  setTimeout(() => setSuccessFn(''), 4000);
+};
+
 export function AdminDashboardPage() {
   const token = localStorage.getItem('cybernova_admin_token') || '';
   const apiBase = import.meta.env.VITE_API_URL || '/api';
@@ -55,6 +61,7 @@ export function AdminDashboardPage() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [serviceFilter, setServiceFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -65,6 +72,7 @@ export function AdminDashboardPage() {
   const [articles, setArticles] = useState([]);
   const [articlesLoading, setArticlesLoading] = useState(true);
   const [articlesError, setArticlesError] = useState('');
+  const [articlesSuccess, setArticlesSuccess] = useState('');
   const [articleSearchQuery, setArticleSearchQuery] = useState('');
   const [articleStatusFilter, setArticleStatusFilter] = useState('');
   const [selectedArticle, setSelectedArticle] = useState(null);
@@ -88,6 +96,7 @@ export function AdminDashboardPage() {
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
   const [servicesError, setServicesError] = useState('');
+  const [servicesSuccess, setServicesSuccess] = useState('');
   const [serviceSearchQuery, setServiceSearchQuery] = useState('');
   const [selectedService, setSelectedService] = useState(null);
   const [serviceDeleteConfirm, setServiceDeleteConfirm] = useState(null);
@@ -106,6 +115,7 @@ export function AdminDashboardPage() {
   const [caseStudies, setCaseStudies] = useState([]);
   const [caseStudiesLoading, setCaseStudiesLoading] = useState(true);
   const [caseStudiesError, setCaseStudiesError] = useState('');
+  const [caseStudiesSuccess, setCaseStudiesSuccess] = useState('');
   const [caseStudySearchQuery, setCaseStudySearchQuery] = useState('');
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const [caseStudyDeleteConfirm, setCaseStudyDeleteConfirm] = useState(null);
@@ -127,6 +137,7 @@ export function AdminDashboardPage() {
   const [events, setEvents] = useState([]);
   const [eventsLoading, setEventsLoading] = useState(true);
   const [eventsError, setEventsError] = useState('');
+  const [eventsSuccess, setEventsSuccess] = useState('');
   const [eventSearchQuery, setEventSearchQuery] = useState('');
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventDeleteConfirm, setEventDeleteConfirm] = useState(null);
@@ -148,6 +159,7 @@ export function AdminDashboardPage() {
   const [feedback, setFeedback] = useState([]);
   const [feedbackLoading, setFeedbackLoading] = useState(true);
   const [feedbackError, setFeedbackError] = useState('');
+  const [feedbackSuccess, setFeedbackSuccess] = useState('');
   const [feedbackSearchQuery, setFeedbackSearchQuery] = useState('');
   const [feedbackStatusFilter, setFeedbackStatusFilter] = useState('');
   const [selectedFeedback, setSelectedFeedback] = useState(null);
@@ -170,6 +182,7 @@ export function AdminDashboardPage() {
   const [gallery, setGallery] = useState([]);
   const [galleryLoading, setGalleryLoading] = useState(true);
   const [galleryError, setGalleryError] = useState('');
+  const [gallerySuccess, setGallerySuccess] = useState('');
   const [gallerySearchQuery, setGallerySearchQuery] = useState('');
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
   const [galleryDeleteConfirm, setGalleryDeleteConfirm] = useState(null);
@@ -199,6 +212,17 @@ export function AdminDashboardPage() {
 
     return () => window.removeEventListener('resize', syncAdminNavState);
   }, []);
+
+  const filteredFeedback = feedback.filter((item) => {
+    const q = (feedbackSearchQuery || '').toString().trim().toLowerCase();
+    const matchesQuery =
+      !q ||
+      (item.name && item.name.toString().toLowerCase().includes(q)) ||
+      (item.email && item.email.toString().toLowerCase().includes(q)) ||
+      (item.comment && item.comment.toString().toLowerCase().includes(q));
+    const matchesStatus = !feedbackStatusFilter || (item.status && item.status === feedbackStatusFilter);
+    return matchesQuery && matchesStatus;
+  });
 
   // ====== FETCH FUNCTIONS ======
   const fetchInquiries = async () => {
@@ -529,6 +553,7 @@ export function AdminDashboardPage() {
       }
 
       setRequests((prev) => prev.map((row) => (row.id === requestId ? payload : row)));
+      showSuccessMessage(setSuccess, `Inquiry marked as ${nextStatus}`);
 
       if (nextStatus === 'resolved') {
         await fetchFeedback();
@@ -553,6 +578,7 @@ export function AdminDashboardPage() {
       setRequests((prev) => prev.filter((row) => row.id !== requestId));
       setDeleteConfirm(null);
       setSelectedInquiry(null);
+      showSuccessMessage(setSuccess, 'Inquiry deleted successfully');
     } catch (err) {
       setError(err.message || 'Failed to delete inquiry');
     }
@@ -638,6 +664,7 @@ export function AdminDashboardPage() {
       });
       setArticleFormOpen(false);
       setSelectedArticle(responsePayload);
+      showSuccessMessage(setArticlesSuccess, articleFormMode === 'edit' ? 'Article updated successfully' : 'Article created successfully');
     } catch (err) {
       setArticlesError(err.message || 'Failed to save article');
     } finally {
@@ -660,6 +687,7 @@ export function AdminDashboardPage() {
       setArticles((prev) => prev.filter((row) => String(row.id) !== String(articleId)));
       setArticleDeleteConfirm(null);
       setSelectedArticle(null);
+      showSuccessMessage(setArticlesSuccess, 'Article deleted successfully');
     } catch (err) {
       setArticlesError(err.message || 'Failed to delete article');
     }
@@ -733,6 +761,7 @@ export function AdminDashboardPage() {
       });
       setServiceFormOpen(false);
       setSelectedService(responsePayload);
+      showSuccessMessage(setServicesSuccess, serviceFormMode === 'edit' ? 'Service updated successfully' : 'Service created successfully');
     } catch (err) {
       setServicesError(err.message || 'Failed to save service');
     } finally {
@@ -755,6 +784,7 @@ export function AdminDashboardPage() {
       setServices((prev) => prev.filter((row) => String(row.id) !== String(serviceId)));
       setServiceDeleteConfirm(null);
       setSelectedService(null);
+      showSuccessMessage(setServicesSuccess, 'Service deleted successfully');
     } catch (err) {
       setServicesError(err.message || 'Failed to delete service');
     }
@@ -837,6 +867,7 @@ export function AdminDashboardPage() {
       });
       setCaseStudyFormOpen(false);
       setSelectedCaseStudy(responsePayload);
+      showSuccessMessage(setCaseStudiesSuccess, caseStudyFormMode === 'edit' ? 'Case study updated successfully' : 'Case study created successfully');
     } catch (err) {
       setCaseStudiesError(err.message || 'Failed to save case study');
     } finally {
@@ -859,6 +890,7 @@ export function AdminDashboardPage() {
       setCaseStudies((prev) => prev.filter((row) => String(row.id) !== String(caseStudyId)));
       setCaseStudyDeleteConfirm(null);
       setSelectedCaseStudy(null);
+      showSuccessMessage(setCaseStudiesSuccess, 'Case study deleted successfully');
     } catch (err) {
       setCaseStudiesError(err.message || 'Failed to delete case study');
     }
@@ -941,6 +973,7 @@ export function AdminDashboardPage() {
       });
       setEventFormOpen(false);
       setSelectedEvent(responsePayload);
+      showSuccessMessage(setEventsSuccess, eventFormMode === 'edit' ? 'Event updated successfully' : 'Event created successfully');
     } catch (err) {
       setEventsError(err.message || 'Failed to save event');
     } finally {
@@ -963,6 +996,7 @@ export function AdminDashboardPage() {
       setEvents((prev) => prev.filter((row) => String(row.id) !== String(eventId)));
       setEventDeleteConfirm(null);
       setSelectedEvent(null);
+      showSuccessMessage(setEventsSuccess, 'Event deleted successfully');
     } catch (err) {
       setEventsError(err.message || 'Failed to delete event');
     }
@@ -984,6 +1018,7 @@ export function AdminDashboardPage() {
       setFeedback((prev) => prev.filter((row) => String(row.id) !== String(feedbackId)));
       setFeedbackDeleteConfirm(null);
       setSelectedFeedback(null);
+      showSuccessMessage(setFeedbackSuccess, 'Feedback deleted successfully');
     } catch (err) {
       setFeedbackError(err.message || 'Failed to delete feedback');
     }
@@ -1005,6 +1040,7 @@ export function AdminDashboardPage() {
       setGallery((prev) => prev.filter((row) => String(row.id) !== String(itemId)));
       setGalleryDeleteConfirm(null);
       setSelectedGalleryItem(null);
+      showSuccessMessage(setGallerySuccess, 'Gallery item deleted successfully');
     } catch (err) {
       setGalleryError(err.message || 'Failed to delete gallery item');
     }
@@ -1033,6 +1069,7 @@ export function AdminDashboardPage() {
       setGalleryFormOpen(false);
       setGalleryForm({ id: '', image_url: '', title: '', description: '', category: 'workshop' });
       setGalleryUploadFile(null);
+      showSuccessMessage(setGallerySuccess, 'Gallery item created successfully');
     } catch (err) {
       setGalleryError(err.message || 'Failed to create gallery item');
     } finally {
@@ -1062,6 +1099,7 @@ export function AdminDashboardPage() {
       setGalleryFormOpen(false);
       setGalleryForm({ id: '', image_url: '', title: '', description: '', category: 'workshop' });
       setGalleryUploadFile(null);
+      showSuccessMessage(setGallerySuccess, 'Image uploaded successfully');
     } catch (err) {
       setGalleryError(err.message || 'Failed to upload image');
     } finally {
@@ -1227,6 +1265,7 @@ export function AdminDashboardPage() {
               </div>
               {loading ? <p>Loading inquiries...</p> : null}
               {error ? <p className="message-error">{error}</p> : null}
+              {success ? <p style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>{success}</p> : null}
               <div className="glass requests-table-wrapper">
                 <table className="requests-table">
                   <thead>
@@ -1320,6 +1359,7 @@ export function AdminDashboardPage() {
               </div>
               {articlesLoading ? <p>Loading articles...</p> : null}
               {articlesError ? <p className="message-error">{articlesError}</p> : null}
+              {articlesSuccess ? <p style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>{articlesSuccess}</p> : null}
               <div className="glass requests-table-wrapper">
                 <table className="requests-table">
                   <thead>
@@ -1394,6 +1434,7 @@ export function AdminDashboardPage() {
               </div>
               {servicesLoading ? <p>Loading services...</p> : null}
               {servicesError ? <p className="message-error">{servicesError}</p> : null}
+              {servicesSuccess ? <p style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>{servicesSuccess}</p> : null}
               <div className="glass requests-table-wrapper">
                 <table className="requests-table">
                   <thead>
@@ -1466,6 +1507,7 @@ export function AdminDashboardPage() {
               </div>
               {caseStudiesLoading ? <p>Loading case studies...</p> : null}
               {caseStudiesError ? <p className="message-error">{caseStudiesError}</p> : null}
+              {caseStudiesSuccess ? <p style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>{caseStudiesSuccess}</p> : null}
               <div className="glass requests-table-wrapper">
                 <table className="requests-table">
                   <thead>
@@ -1538,6 +1580,7 @@ export function AdminDashboardPage() {
               </div>
               {eventsLoading ? <p>Loading events...</p> : null}
               {eventsError ? <p className="message-error">{eventsError}</p> : null}
+              {eventsSuccess ? <p style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>{eventsSuccess}</p> : null}
               <div className="glass requests-table-wrapper">
                 <table className="requests-table">
                   <thead>
@@ -1595,6 +1638,11 @@ export function AdminDashboardPage() {
           {activeTab === 'feedback' && (
             <>
               <h1>Customer Feedback</h1>
+              {feedbackSuccess && (
+                <div style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>
+                  {feedbackSuccess}
+                </div>
+              )}
               {feedbackError && (
                 <div style={{ background: 'rgba(255,68,68,0.1)', border: '1px solid rgba(255,68,68,0.3)', padding: '12px', borderRadius: '8px', color: '#ff4444', marginBottom: '16px' }}>
                   {feedbackError}
@@ -1649,7 +1697,7 @@ export function AdminDashboardPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {feedback.map((item) => (
+                      {filteredFeedback.map((item) => (
                         <tr key={item.id} style={{ borderBottom: '1px solid rgba(0,212,255,0.1)' }}>
                           <td style={{ padding: '12px' }}>{item.name}</td>
                           <td style={{ padding: '12px', fontSize: '0.85rem' }}>{item.email}</td>
@@ -1670,6 +1718,10 @@ export function AdminDashboardPage() {
                                     });
                                     if (response.ok) {
                                       setFeedback(prev => prev.map(f => f.id === item.id ? { ...f, status: nextStatus } : f));
+                                      showSuccessMessage(setFeedbackSuccess, `Feedback ${nextStatus} successfully`);
+                                    } else {
+                                      const payload = await response.json();
+                                      setFeedbackError(payload.message || `Failed to ${nextStatus} feedback`);
                                     }
                                   } catch (err) {
                                     setFeedbackError(err.message);
@@ -1686,7 +1738,7 @@ export function AdminDashboardPage() {
                       ))}
                     </tbody>
                   </table>
-                  {feedback.length === 0 && (
+                  {filteredFeedback.length === 0 && (
                     <div style={{ padding: '40px', textAlign: 'center', opacity: 0.6 }}>No feedback submissions yet</div>
                   )}
                 </div>
@@ -1698,6 +1750,11 @@ export function AdminDashboardPage() {
           {activeTab === 'gallery' && (
             <>
               <h1>Gallery Management</h1>
+              {gallerySuccess && (
+                <div style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', padding: '12px', borderRadius: '8px', color: '#00FF88', marginBottom: '16px' }}>
+                  {gallerySuccess}
+                </div>
+              )}
               {galleryError && (
                 <div style={{ background: 'rgba(255,68,68,0.1)', border: '1px solid rgba(255,68,68,0.3)', padding: '12px', borderRadius: '8px', color: '#ff4444', marginBottom: '16px' }}>
                   {galleryError}
